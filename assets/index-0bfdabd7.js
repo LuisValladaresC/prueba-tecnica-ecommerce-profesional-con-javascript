@@ -1,0 +1,7 @@
+(function(){const s=document.createElement("link").relList;if(s&&s.supports&&s.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const n of t.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&i(n)}).observe(document,{childList:!0,subtree:!0});function o(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function i(e){if(e.ep)return;e.ep=!0;const t=o(e);fetch(e.href,t)}})();localStorage.removeItem("pagination");const c=document.getElementById("app"),l=document.getElementById("observe"),a="https://api.escuelajs.co/api/v1/products",f=()=>{let o=localStorage.getItem("pagination");o?(o=Number(o)+10,localStorage.setItem("pagination",o)):(o=5,localStorage.setItem("pagination",5));const i=`${a}?offset=${o}&limit=10`;fetch(i).then(e=>e.json()).then(e=>{p(e)}).catch(e=>console.log(e))},d=r=>`<article class="Card">
+    <img src="${r.images[0]}" />
+    <h2>
+      ${r.title}
+      <small>$ ${r.price}</small>
+    </h2>
+  </article>`,p=r=>{let s=document.createElement("section");s.classList.add("Items");let o="";r.forEach(i=>{o+=d(i)}),s.innerHTML+=o,c.appendChild(s)},m=new IntersectionObserver(r=>{r[0].isIntersecting&&f()},{rootMargin:"0px 0px 100% 0px"});m.observe(l);
